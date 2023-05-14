@@ -14,11 +14,9 @@ inputs:
     default: "GHA Pipeline"
 runs:
   using: "composite"
-  env:
-    WEBHOOK: "${{ inputs.message }}"
   steps:
     - name: Read value
       run: |
         echo "::add-mask::$WEBHOOK"
-        curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" $WEBHOOK
+        curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" ${{ inputs.message }}
       shell: bash
