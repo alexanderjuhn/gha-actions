@@ -1,19 +1,19 @@
 # notify.yml
-name: 'Notify Discord'
+name: 'Send a message to Discord'
 description: 'Send message to Discord'
 inputs:
-  webhook:  
-    description: 'Discord webhook'
-    required: true
   message:  
     description: 'Message to send'
     required: true
   sender:  
     description: 'Who sent the message'
-    required: true
+    required: false
+    default: "GHA Pipeline"
 runs:
+  using: "composite"
   steps:
-    - run: echo hi
+    - name: Read value
+      run: |
+        echo "::add-mask::$WEBHOOK"
+        curl -s -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" $WEBHOOK
       shell: bash
-#    - run: curl -H "Content-Type: application/json" -d '{"username": ${{ inputs.sender }}, "content": ${{ inputs.message }}}' ${{ inputs.message }}
-#      shell: bash
