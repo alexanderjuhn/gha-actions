@@ -16,7 +16,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-        webhook_url="${{ inputs.message }}"
+        webhook_url="::add-mask::${{ inputs.message }}"
         echo "::add-mask::$webhook_url"
         curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" $webhook_url
       shell: bash
