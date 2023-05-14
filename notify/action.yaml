@@ -16,7 +16,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-        curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" ${{ inputs.message }}
+        curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" ${{ inputs.webhook }}
       shell: bash
 #    - run: """curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}}\"" ${{ inputs.message }}"""
 #      shell: bash
