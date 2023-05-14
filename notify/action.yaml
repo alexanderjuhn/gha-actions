@@ -17,7 +17,7 @@ runs:
   steps:
     - name: Read value
       run: |
-        WEBHOOK=::add-mask::$(echo -n ${{ inputs.message }})
+        WEBHOOK=::add-mask::$(echo -n ::add-mask::${{ inputs.message }})
         echo "::add-mask::$WEBHOOK"
         curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" $WEBHOOK
       shell: bash
