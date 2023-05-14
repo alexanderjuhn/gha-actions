@@ -3,8 +3,9 @@ name: 'Notify Discord'
 description: 'Send message to Discord'
 inputs:
   webhook:  
-    description: 'Discord webhook'
-    required: true
+    description: 'Discord webhook. If not provided then it will look for the secret DISCORD_WEBHOOK'
+    required: false
+    default: ${{ secrets.DISCORD_WEBHOOK }}
   message:  
     description: 'Message to send'
     required: true
@@ -17,6 +18,5 @@ runs:
   steps:
     - name: Read value
       run: |
-        echo "::add-mask::$WEBHOOK"
-        curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" ${{ inputs.message }}
+        curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" ${{ inputs.webhook }}
       shell: bash
