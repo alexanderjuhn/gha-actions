@@ -12,6 +12,7 @@ inputs:
     description: 'Who sent the message'
     required: true
 runs:
+  using: "composite"
   steps:
     - run: echo Hi
       shell: bash
