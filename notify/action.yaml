@@ -16,9 +16,6 @@ runs:
   using: "composite"
   steps:
     - run: |
+        echo "::add-mask::${{ inputs.message }}"
         curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" ::add-mask::${{ inputs.message }}
       shell: bash
-#    - run: """curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}}\"" ${{ inputs.message }}"""
-#      shell: bash
-#    - run: curl -H "Content-Type: application/json" -d '{"username": ${{ inputs.sender }}, "content": ${{ inputs.message }}}' ${{ inputs.message }}
-#      shell: bash
