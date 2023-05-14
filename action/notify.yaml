@@ -1,0 +1,17 @@
+# notify.yml
+name: 'Notify Discord'
+description: 'Send message to Discord'
+inputs:
+  webhook:  
+    description: 'Discord webhook'
+    required: true
+  message:  
+    description: 'Message to send'
+    required: true
+  sender:  
+    description: 'Who sent the message'
+    required: true
+runs:
+  steps:
+    - run: curl -H "Content-Type: application/json" -d '{"username": ${{ inputs.sender }}, "content": ${{ inputs.message }}}' ${{ inputs.message }}
+      shell: bash
