@@ -2,10 +2,9 @@
 name: 'Send a message to Discord'
 description: 'Send message to Discord'
 inputs:
-#  webhook:  
-#    description: 'Discord webhook. If not provided then it will look for the secret DISCORD_WEBHOOK'
-#    required: false
-#    default: ${{ secrets.DISCORD_WEBHOOK }}
+  webhook:  
+    description: 'Discord webhook. If not provided then it will look for the secret DISCORD_WEBHOOK'
+    required: true
   message:  
     description: 'Message to send'
     required: true
@@ -18,6 +17,5 @@ runs:
   steps:
     - name: Read value
       run: |
-        WEBHOOK=${{ secrets.DISCORD_WEBHOOK }}
-        curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" $WEBHOOK
+        curl -H "Content-Type: application/json" -d "{\"username\": \"${{ inputs.sender }}\", \"content\": \"${{ inputs.message }}\"}" ${{ inputs.webhook }}
       shell: bash
