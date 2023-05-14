@@ -10,7 +10,7 @@ inputs:
     required: true
   sender:  
     description: 'Who sent the message'
-    required: true
+    required: false
     default: "GHA Pipeline"
 runs:
   using: "composite"
