@@ -1,0 +1,24 @@
+name: 'Send a message to Discord'
+description: 'Send message to Discord'
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Maven Action
+      uses: s4u/setup-maven-action@v1.4.0
+      with:
+        java-version: '11'
+    - uses: actions/checkout@v3
+      with:
+        repository: 'alexanderjuhn/temperatur_master_java'     
+    - name: Build Binarys
+      run: cd RoomApps; mvn --batch-mode --update-snapshots package
+    - name: Docker Login
+      env: 
+        HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
+      run: docker login -u sascha -p $HARBOR_PASSWORD 192.168.2.10:5000
+    - name: Build RoomWorker
+      run: cd RoomApps/RoomWorker; docker build -t 192.168.2.10:5000/home/roomworker:${{ github.run_number }} -f dockerfile .
+    - run: docker push 192.168.2.10:5000/home/roomworker:${{ github.run_number }}
+    - name: Build RoomObserverMQ
+      run: cd RoomApps/RoomObserverMQ; docker build -t 192.168.2.10:5000/home/roomobserver_mq:${{ github.run_number }} -f dockerfile .
+    - run: docker push 192.168.2.10:5000/home/roomobserver_mq:${{ github.run_number }}
