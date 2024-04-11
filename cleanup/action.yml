@@ -1,0 +1,11 @@
+# cleanup.yml
+name: 'Cleanup'
+description: 'Cleanup workspace'
+runs:
+  steps:
+    - run: |
+        ls -la ./
+        rm -rf ./* || true
+        rm -rf ./.??* || true
+        ls -la ./
+      shell: bash
