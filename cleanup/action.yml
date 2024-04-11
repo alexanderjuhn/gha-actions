@@ -1,9 +1,11 @@
 # cleanup.yml
-name: 'Cleanup'
+name: 'Cleanup workspace'
 description: 'Cleanup workspace'
 runs:
+  using: "composite"
   steps:
-    - run: |
+    - name: Cleanup workspace
+      run: |
         ls -la ./
         rm -rf ./* || true
         rm -rf ./.??* || true
