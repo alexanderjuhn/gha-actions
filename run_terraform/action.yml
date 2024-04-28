@@ -25,13 +25,15 @@ runs:
         terraform_version: 1.7.5
     - name: Do Terraform stuff
       shell: bash
+      env:
+        APPLY: ${{ inputs.apply }}
       run: |
         echo "Workmode: ${{ inputs.apply }}"
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
         terraform -chdir=$WORKDIR init
-        if [ "${{ inputs.apply }}" == 'apply' ]
+        if [ "$APPLY" == 'apply' ]
         then
           terraform -chdir=$WORKDIR apply -auto-approve
         else
