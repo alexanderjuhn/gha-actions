@@ -25,6 +25,9 @@ runs:
     - name: Do Terraform stuff
       shell: bash
       run: |
+        echo ${{ inputs.apply }}
+        echo "${{ inputs.apply }}"
+        echo '${{ inputs.apply }}'
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
