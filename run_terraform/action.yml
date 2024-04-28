@@ -28,7 +28,7 @@ runs:
       env:
         APPLY: ${{ inputs.apply }}
       run: |
-        echo "Workmode: $APPLY"
+        echo 'Workmode: $APPLY'
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
