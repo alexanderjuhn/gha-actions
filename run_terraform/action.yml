@@ -11,6 +11,11 @@ inputs:
   credentials-path:
     description: 'Path to AWS credentials file'
     required: true
+  apply:
+    description: 'Apply script. Default Plan'
+    required: false
+    default: 'false'
+    
 runs:
   using: "composite"
   steps:
@@ -24,5 +29,10 @@ runs:
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
-        terraform -chdir=$WORKDIR init 
-        terraform -chdir=$WORKDIR apply -auto-approve
+        terraform -chdir=$WORKDIR init
+        if [ ${{ inputs.apply }} == true ]
+        then
+          terraform -chdir=$WORKDIR apply -auto-approve
+        else
+          terraform -chdir=$WORKDIR plan
+        fi
