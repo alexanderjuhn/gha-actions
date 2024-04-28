@@ -14,7 +14,7 @@ inputs:
   apply:
     description: 'Apply script. Default Plan'
     required: false
-    default: 'false'
+    default: 'plan'
     
 runs:
   using: "composite"
@@ -30,7 +30,7 @@ runs:
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
         terraform -chdir=$WORKDIR init
-        if [ ${{ inputs.apply }} == true ]
+        if [ ${{ inputs.apply }} == 'apply' ]
         then
           terraform -chdir=$WORKDIR apply -auto-approve
         else
