@@ -13,7 +13,7 @@ inputs:
     required: true
   apply:
     description: 'Apply script. Default Plan'
-    required: false
+    required: true
     
 runs:
   using: "composite"
