@@ -20,8 +20,8 @@ runs:
         terraform_version: 1.7.5
     - name: Do Terraform stuff
       run: |
-        export AWS_CONFIG_FILE=${{ vars.config-path }}
-        export AWS_SHARED_CREDENTIALS_FILE=${{ vars.credentials-path }}
-        WORKDIR=${{ vars.script-path }}
+        export AWS_CONFIG_FILE=${{ inputs.config-path }}
+        export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
+        WORKDIR=${{ inputs.script-path }}
         terraform -chdir=$WORKDIR init 
         terraform -chdir=$WORKDIR apply -auto-approve
