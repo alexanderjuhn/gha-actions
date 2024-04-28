@@ -19,6 +19,7 @@ runs:
       with:
         terraform_version: 1.7.5
     - name: Do Terraform stuff
+      shell: bash
       run: |
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
