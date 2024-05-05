@@ -14,21 +14,25 @@ inputs:
   apply:
     description: 'Apply script. Default Plan'
     required: true
+  backend-path:
+    description: 'Path to backend configuration file'
+    required:
     
 runs:
   using: "composite"
   steps:
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2.0.3
+      uses: opentofu/setup-opentofu@v1@v1.0.3
       with:
-        terraform_version: 1.7.5
+        tofu_version: 1.7.0
     - name: Do Terraform stuff
       shell: bash
       run: |
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
-        terraform -chdir=$WORKDIR init
+        BACKEND_CONFIG=${{ inputs.backend-path }}
+        terraform -chdir=$WORKDIR init -backend-config=$BACKEND_CONFIG
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
           terraform -chdir=$WORKDIR apply -auto-approve
