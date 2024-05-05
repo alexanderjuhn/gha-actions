@@ -1,0 +1,41 @@
+# run_terraform.yml
+name: 'Run a Terraform script'
+description: 'Run a Terraform script'
+inputs:
+  script-path:  
+    description: 'Message to send'
+    required: true
+  config-path:
+    description: 'Path to AWS config file'
+    required: true
+  credentials-path:
+    description: 'Path to AWS credentials file'
+    required: true
+  apply:
+    description: 'Apply script. Default Plan'
+    required: true
+  backend-path:
+    description: 'Path to backend configuration file'
+    required:
+    
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Terraform
+      uses: opentofu/setup-opentofu@v1@v1.0.3
+      with:
+        tofu_version: 1.7.0
+    - name: Do Terraform stuff
+      shell: bash
+      run: |
+        export AWS_CONFIG_FILE=${{ inputs.config-path }}
+        export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
+        WORKDIR=${{ inputs.script-path }}
+        BACKEND_CONFIG=${{ inputs.backend-path }}
+        terraform -chdir=$WORKDIR init -backend-config=$BACKEND_CONFIG
+        if [[ ${{ inputs.apply }} == "apply" ]]
+        then
+          terraform -chdir=$WORKDIR apply -auto-approve
+        else
+          terraform -chdir=$WORKDIR plan
+        fi
