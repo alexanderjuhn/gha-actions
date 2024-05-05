@@ -16,7 +16,10 @@ inputs:
     required: true
   backend-path:
     description: 'Path to backend configuration file'
-    required:
+    required: true
+  additional-params:
+    description: 'Additional parameters for Opentofu call'
+    required: false
     
 runs:
   using: "composite"
@@ -35,7 +38,7 @@ runs:
         tofu -chdir=$WORKDIR init -backend-config=$BACKEND_CONFIG
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
-          tofu -chdir=$WORKDIR apply -auto-approve
+          tofu -chdir=$WORKDIR apply -auto-approve ${{inputs.additional-params}}
         else
-          tofu -chdir=$WORKDIR plan
+          tofu -chdir=$WORKDIR plan ${{inputs.additional-params}}
         fi
