@@ -1,6 +1,6 @@
-# run_terraform.yml
-name: 'Run a Terraform script'
-description: 'Run a Terraform script'
+# run_tofu.yml
+name: 'Run a Opentofu script'
+description: 'Run a Opentofu script'
 inputs:
   script-path:  
     description: 'Message to send'
@@ -21,21 +21,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup Terraform
+    - name: Setup Opentofu
       uses: opentofu/setup-opentofu@v1.0.3
       with:
         tofu_version: 1.7.0
-    - name: Do Terraform stuff
+    - name: Do Opentofu stuff
       shell: bash
       run: |
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
         BACKEND_CONFIG=${{ inputs.backend-path }}
-        terraform -chdir=$WORKDIR init -backend-config=$BACKEND_CONFIG
+        tofu -chdir=$WORKDIR init -backend-config=$BACKEND_CONFIG
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
-          terraform -chdir=$WORKDIR apply -auto-approve
+          tofu -chdir=$WORKDIR apply -auto-approve
         else
-          terraform -chdir=$WORKDIR plan
+          tofu -chdir=$WORKDIR plan
         fi
