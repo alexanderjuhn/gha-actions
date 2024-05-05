@@ -22,7 +22,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup Terraform
-      uses: opentofu/setup-opentofu@v1@v1.0.3
+      uses: opentofu/setup-opentofu@v1.0.3
       with:
         tofu_version: 1.7.0
     - name: Do Terraform stuff
