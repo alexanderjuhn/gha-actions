@@ -11,6 +11,9 @@ inputs:
   s3-host:
     description: 'Host and Port for S3 service'
     required: true
+  backend-config-path:
+    description: 'Path to store backend config'
+    required: true
     
 runs:
   using: "composite"
@@ -18,14 +21,14 @@ runs:
     - name: Write backend config
       shell: bash
       run: |
-        echo 'bucket = "${{ inputs.bucket }}"' > config/terraform/local-nas/01_containers/backend.conf
-        echo "key    = \"${{ inputs.key }}\"" >> config/terraform/local-nas/01_containers/backend.conf
-        echo 'region = "us-east-1"' >> config/terraform/local-nas/01_containers/backend.conf
-        echo 'skip_credentials_validation = true' >> config/terraform/local-nas/01_containers/backend.conf
-        echo 'skip_requesting_account_id = true' >> config/terraform/local-nas/01_containers/backend.conf
-        echo 'skip_metadata_api_check = true' >> config/terraform/local-nas/01_containers/backend.conf
-        echo 'skip_region_validation = true' >> config/terraform/local-nas/01_containers/backend.conf
-        echo 'use_path_style = true' >> config/terraform/local-nas/01_containers/backend.conf
-        echo 'endpoints = {' >> config/terraform/local-nas/01_containers/backend.conf
-        echo "  s3 = \"${{ inputs.s3-host }}\"" >> config/terraform/local-nas/01_containers/backend.conf
-        echo -n '}' >> config/terraform/local-nas/01_containers/backend.conf
+        echo 'bucket = "${{ inputs.bucket }}"' > ${{ inputs.backend-config-path }}
+        echo "key    = \"${{ inputs.key }}\"" >> ${{ inputs.backend-config-path }}
+        echo 'region = "us-east-1"' >> ${{ inputs.backend-config-path }}
+        echo 'skip_credentials_validation = true' >> ${{ inputs.backend-config-path }}
+        echo 'skip_requesting_account_id = true' >> ${{ inputs.backend-config-path }}
+        echo 'skip_metadata_api_check = true' >> ${{ inputs.backend-config-path }}
+        echo 'skip_region_validation = true' >> ${{ inputs.backend-config-path }}
+        echo 'use_path_style = true' >> ${{ inputs.backend-config-path }}
+        echo 'endpoints = {' >> ${{ inputs.backend-config-path }}
+        echo "  s3 = \"${{ inputs.s3-host }}\"" >> ${{ inputs.backend-config-path }}
+        echo -n '}' >> ${{ inputs.backend-config-path }}
