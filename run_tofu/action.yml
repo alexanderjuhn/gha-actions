@@ -33,6 +33,7 @@ runs:
       shell: bash
       run: |
         ls -la
+        cat ${{ inputs.backend-path }}
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
