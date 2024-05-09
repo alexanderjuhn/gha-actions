@@ -1,0 +1,31 @@
+# run_tofu.yml
+name: 'Run a Opentofu script'
+description: 'Run a Opentofu script'
+inputs:
+  bucket:  
+    description: 'Bucket to store statefile'
+    required: true
+  key:
+    description: 'Statefile key path'
+    required: true
+  s3-host:
+    description: 'Host and Port for S3 service'
+    required: true
+    
+runs:
+  using: "composite"
+  steps:
+    - name: Write backend config
+      shell: bash
+      run: |
+        echo 'bucket = "${{ inputs.bucket }}"' > config/terraform/local-nas/01_containers/backend.conf
+        echo "key    = \"${{ inputs.key }}\"" >> config/terraform/local-nas/01_containers/backend.conf
+        echo 'region = "us-east-1"' >> config/terraform/local-nas/01_containers/backend.conf
+        echo 'skip_credentials_validation = true' >> config/terraform/local-nas/01_containers/backend.conf
+        echo 'skip_requesting_account_id = true' >> config/terraform/local-nas/01_containers/backend.conf
+        echo 'skip_metadata_api_check = true' >> config/terraform/local-nas/01_containers/backend.conf
+        echo 'skip_region_validation = true' >> config/terraform/local-nas/01_containers/backend.conf
+        echo 'use_path_style = true' >> config/terraform/local-nas/01_containers/backend.conf
+        echo 'endpoints = {' >> config/terraform/local-nas/01_containers/backend.conf
+        echo "  s3 = \"${{ inputs.s3-host }}\"" >> config/terraform/local-nas/01_containers/backend.conf
+        echo -n '}' >> config/terraform/local-nas/01_containers/backend.conf
