@@ -32,6 +32,7 @@ runs:
     - name: Do Opentofu stuff
       shell: bash
       run: |
+        ls -la
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
