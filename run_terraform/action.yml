@@ -14,9 +14,6 @@ inputs:
   apply:
     description: 'Apply script. Default Plan'
     required: true
-  backend-path:
-    description: 'Path to backend configuration file'
-    required:
     
 runs:
   using: "composite"
@@ -32,7 +29,7 @@ runs:
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
         BACKEND_CONFIG=${{ inputs.backend-path }}
-        terraform -chdir=$WORKDIR init -backend-config=$BACKEND_CONFIG
+        terraform -chdir=$WORKDIR init
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
           terraform -chdir=$WORKDIR apply -auto-approve
