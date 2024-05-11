@@ -17,6 +17,7 @@ inputs:
   backend-path:
     description: 'Path to backend configuration file'
     required: true
+    default: ""
   additional-params:
     description: 'Additional parameters for Opentofu call'
     required: false
@@ -35,7 +36,7 @@ runs:
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
         BACKEND_CONFIG=${{ inputs.backend-path }}
-        tofu -chdir=$WORKDIR init -backend-config=$BACKEND_CONFIG
+        tofu -chdir=$WORKDIR init -backend-config=${{ inputs.backend-path }}
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
           tofu -chdir=$WORKDIR apply -auto-approve ${{inputs.additional-params}}
