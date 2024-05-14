@@ -1,0 +1,31 @@
+name: 'Build database parameter'
+description: 'Build database parameter'
+inputs:
+  db_host:  
+    description: 'Database hostname'
+    required: true
+  db_port:
+    description: 'Database port'
+    required: true
+  db_name:
+    description: 'Database name'
+    required: true
+  db_user:
+    description: 'Database user'
+    required: true
+  db_password:
+    description: 'Database password'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Write backend config
+      shell: bash
+      run: |
+        # BUILD database-parameters.yaml
+        echo "postgres" > database-parameters.yaml
+        echo "  host: ${{inputs.db_host}}" >> database-parameters.yaml
+        echo "  port: ${{inputs.db_port}}" >> database-parameters.yaml
+        echo "  database: ${{inputs.db_name}}" >> database-parameters.yaml
+        echo "  username: ${{inputs.db_user}}" >> database-parameters.yaml
+        echo "  password: ${{inputs.db_password}}" >> database-parameters.yaml
