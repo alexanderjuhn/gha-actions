@@ -1,0 +1,32 @@
+name: 'Build S3 credentials'
+description: 'Build S3 credentials'
+inputs:
+  user:  
+    description: 'User for S3 bucket'
+    required: true
+  password:
+    description: 'Password for S3 bucket'
+    required: true
+  s3-endpoint:
+    description: 'Host and Port for S3 service'
+    required: true
+    
+runs:
+  using: "composite"
+  steps:
+    - name: Write backend config
+      shell: bash
+      run: |
+        mkdir .aws
+        cd .aws
+        # BUILD config
+        echo "[default]" > config
+        echo "region = us-east" >> config
+        echo "output = json" >> config
+        echo "s3 =" >> config
+        echo "    signature_version = s3v4" >> config
+        echo "endpoint_url = ${{ inputs.s3-endpoint }}" >> config
+        # BUILD credentials
+        echo "[default]" > credentials
+        echo "aws_access_key_id = ${{inputs.user}}" >> credentials
+        echo "aws_secret_access_key = ${{inputs.password}}" >> credentials
