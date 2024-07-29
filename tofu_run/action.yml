@@ -47,3 +47,4 @@ runs:
         else
           tofu -chdir=$WORKDIR plan ${{inputs.additional-params}}
         fi
+        echo =============== done ====================0
