@@ -41,6 +41,7 @@ runs:
         echo $WORKDIR
         echo =============ls ===========================0
         ls -l $WORKDIR
+        export TF_LOG=DEBUG
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
           tofu -chdir=$WORKDIR apply -auto-approve ${{inputs.additional-params}}
