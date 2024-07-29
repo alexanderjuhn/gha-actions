@@ -37,6 +37,10 @@ runs:
         WORKDIR=${{ inputs.script-path }}
         BACKEND_CONFIG=${{ inputs.backend-path }}
         tofu -chdir=$WORKDIR init -backend-config=${{ inputs.backend-path }}
+        echo ========working path===========================
+        echo $WORKDIR
+        echo =============ls ===========================0
+        ls -l $WORKDIR
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
           tofu -chdir=$WORKDIR apply -auto-approve ${{inputs.additional-params}}
