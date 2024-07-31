@@ -36,6 +36,9 @@ runs:
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
         BACKEND_CONFIG=${{ inputs.backend-path }}
+        ls -l
+        ls -l tf_self_service
+        ls -l tf_self_service/backend
         tofu -chdir=$WORKDIR init -backend-config=${{ inputs.backend-path }}
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
