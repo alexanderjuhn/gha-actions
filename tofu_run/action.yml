@@ -14,8 +14,8 @@ inputs:
   apply:
     description: 'Apply script. Default Plan'
     required: true
-  backend-path:
-    description: 'Path to backend configuration file'
+  backend-param:
+    description: 'Params to backend configuration'
     required: true
     default: ""
   additional-params:
@@ -42,8 +42,8 @@ runs:
         tofu -chdir=$WORKDIR init -backend-config=${{ inputs.backend-path }}
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
-          tofu -chdir=$WORKDIR apply -auto-approve ${{inputs.additional-params}}
+          tofu -chdir=$WORKDIR apply -auto-approve ${{ inputs.backend-param }} ${{inputs.additional-params}}
         else
-          tofu -chdir=$WORKDIR plan ${{inputs.additional-params}}
+          tofu -chdir=$WORKDIR plan ${{ inputs.backend-param }} ${{inputs.additional-params}}
         fi
         echo =============== done ====================0
