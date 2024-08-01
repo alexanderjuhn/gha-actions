@@ -35,7 +35,6 @@ runs:
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
-        BACKEND_CONFIG=${{ inputs.backend-path }}
         tofu -chdir=$WORKDIR init ${{ inputs.backend-param }}
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
