@@ -29,7 +29,7 @@ runs:
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
         cd $WORKDIR
-        #terraform init
+        terraform init
         #if [[ ${{ inputs.apply }} == "apply" ]]
         #then
         #  terraform apply -auto-approve
