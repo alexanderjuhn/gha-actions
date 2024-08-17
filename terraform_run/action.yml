@@ -19,7 +19,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3.0.0
+      uses: hashicorp/setup-terraform@v3.1.1
       with:
         terraform_version: 1.9.4
     - name: Do Terraform stuff
@@ -28,13 +28,11 @@ runs:
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
-        echo $WORKDIR
-        ls -l
-        ls -l $WORKDIR
-        terraform -chdir=$WORKDIR init
+        cd $WORKDIR
+        terraform init
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
-          terraform -chdir=$WORKDIR apply -auto-approve
+          terraform apply -auto-approve
         else
-          terraform -chdir=$WORKDIR plan
+          terraform plan
         fi
