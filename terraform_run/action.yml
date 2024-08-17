@@ -28,6 +28,8 @@ runs:
         export AWS_CONFIG_FILE=${{ inputs.config-path }}
         export AWS_SHARED_CREDENTIALS_FILE=${{ inputs.credentials-path }}
         WORKDIR=${{ inputs.script-path }}
+        ls -l
+        ls -l $WORKDIR
         terraform -chdir=$WORKDIR init
         if [[ ${{ inputs.apply }} == "apply" ]]
         then
