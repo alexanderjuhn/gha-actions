@@ -21,7 +21,7 @@ runs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3.1.1
       with:
-        terraform_version: 1.9.4
+        terraform_version: 1.9.0
     - name: Do Terraform stuff
       shell: bash
       run: |
