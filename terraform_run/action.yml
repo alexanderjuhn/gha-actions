@@ -31,9 +31,9 @@ runs:
         cd $WORKDIR
         cat *
         terraform init
-        #if [[ ${{ inputs.apply }} == "apply" ]]
-        #then
-        #  terraform apply -auto-approve
-        #else
-        #  terraform plan
-        #fi
+        if [[ ${{ inputs.apply }} == "apply" ]]
+        then
+          terraform apply -auto-approve
+        else
+          terraform plan
+        fi
